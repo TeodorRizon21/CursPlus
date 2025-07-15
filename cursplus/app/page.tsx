@@ -262,6 +262,35 @@ export default function Home() {
               </a>
             </div>
           </div>
+          <div className="relative mb-8 flex flex-col items-center">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="inline-block bg-red-100 text-red-600 text-xs font-semibold px-3 py-1 rounded-full animate-pulse">Reducere până la 1 august 2025</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-4xl font-extrabold text-red-600 animate-bounce">600 lei</span>
+              <span className="relative text-lg text-gray-400 font-semibold">
+                <span className="line-through block animate-strike">800 lei</span>
+              </span>
+            </div>
+            <style>{`
+              @keyframes strike {
+                0% { width: 0; }
+                100% { width: 100%; }
+              }
+              .animate-strike {
+                position: relative;
+              }
+              .animate-strike:after {
+                content: '';
+                position: absolute;
+                left: 0; top: 50%;
+                width: 100%; height: 2px;
+                background: #ef4444;
+                transform: translateY(-50%);
+                animation: strike 1s cubic-bezier(.4,0,.2,1) 1;
+              }
+            `}</style>
+          </div>
         </div>
       </section>
 
@@ -270,125 +299,96 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-gray-900 mb-4">
-              Alte Cursuri Disponibile
+              Cursuri viitoare
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Programe suplimentare pentru a-ți extinde cunoștințele tehnologice
+              Pregătim noi programe pentru a-ți crește afacerea și abilitățile digitale. Înscrie-te pe lista de așteptare!
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Curs 1 */}
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">💻</span>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Curs AI în afacerea ta */}
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-red-100 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-block bg-red-100 text-red-600 text-xs font-semibold px-3 py-1 rounded-full">În curând</span>
+                  <span className="text-2xl">🤖</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  AI în afacerea ta
+                </h3>
+                <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                  Descoperă cum poți folosi inteligența artificială pentru a automatiza sarcini, a lua decizii mai bune și a-ți crește afacerea.
+                </p>
+                <ul className="text-sm text-gray-600 space-y-1 mb-4">
+                  <li>• Automatizări cu AI pentru procese repetitive</li>
+                  <li>• Analiză de date și predicții</li>
+                  <li>• Chatboți și asistenți virtuali</li>
+                </ul>
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-3">
-                Bazele Tehnologiei
-              </h3>
-              <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                Învață conceptele fundamentale ale tehnologiei moderne și cum să le folosești în viața de zi cu zi.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1 mb-4">
-                <li>• Navigare pe internet în siguranță</li>
-                <li>• Gestionarea conturilor online</li>
-                <li>• Protecția datelor personale</li>
-              </ul>
-              <a href="#inscriere" className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors">
-                Află mai multe →
-              </a>
             </div>
 
-            {/* Curs 2 */}
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">📱</span>
+            {/* Curs Marketing digital pentru începători */}
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-red-100 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-block bg-red-100 text-red-600 text-xs font-semibold px-3 py-1 rounded-full">În curând</span>
+                  <span className="text-2xl">📈</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Marketing digital pentru începători
+                </h3>
+                <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                  Învață bazele promovării online: de la social media la email marketing și reclame eficiente pentru afacerea ta.
+                </p>
+                <ul className="text-sm text-gray-600 space-y-1 mb-4">
+                  <li>• Social media pentru afaceri mici</li>
+                  <li>• Email marketing simplificat</li>
+                  <li>• Reclame online cu buget redus</li>
+                </ul>
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-3">
-                Smartphone & Aplicații
-              </h3>
-              <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                Stăpânește telefonul inteligent și descoperă aplicațiile care îți fac viața mai ușoară.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1 mb-4">
-                <li>• Configurarea telefonului</li>
-                <li>• Aplicații utile pentru ziua cu zi</li>
-                <li>• Comunicare digitală</li>
-              </ul>
-              <a href="#inscriere" className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors">
-                Află mai multe →
-              </a>
-            </div>
-
-            {/* Curs 3 */}
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">🏠</span>
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-3">
-                Tehnologie pentru Casă
-              </h3>
-              <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                Transformă casa ta într-un spațiu inteligent cu dispozitive și sisteme moderne.
-              </p>
-              <ul className="text-sm text-gray-600 space-y-1 mb-4">
-                <li>• Dispozitive smart home</li>
-                <li>• Automatizări pentru confort</li>
-                <li>• Economie de energie</li>
-              </ul>
-              <a href="#inscriere" className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors">
-                Află mai multe →
-              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* Despre Noi Section */}
-      <section id="despre" className="py-16 bg-white">
+      <section id="despre" className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-light text-gray-900 mb-6">
-                Despre CursPlus
-              </h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Suntem dedicați să ajutăm oamenii să se adapteze la schimbările tehnologice rapide din jurul nostru. 
-                Cursurile noastre sunt concepute pentru a fi accesibile, practice și relevante pentru viața cotidiană.
-              </p>
-              <div className="space-y-3">
-                <div className="flex items-center">
-                  <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-red-600 text-sm">✓</span>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Despre Echipa Noastră
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Suntem o echipă de ingineri absolvenți ai Politehnicii, pasionați de tehnologie și educație. Lucrăm zilnic cu cele mai noi tehnologii și credem că acestea pot face viața mai ușoară pentru toți. Misiunea noastră este să împărtășim cunoștințele noastre și să ajutăm oamenii să se adapteze cu încredere la lumea digitală.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Poze echipă */}
+            <div className="flex flex-col items-center gap-6">
+              {/* Exemplu: Înlocuiește cu poze reale */}
+              <div className="flex justify-center mb-4">
+                  <div className="w-64 h-64 rounded-full bg-gray-200 overflow-hidden border-4 border-red-100 shadow">
+                    <img src="/poza1.jpg" alt="Membru echipă" className="object-cover w-full h-full" />
                   </div>
-                  <span className="text-gray-700 text-sm">Instructori experimentați</span>
                 </div>
-                <div className="flex items-center">
-                  <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-red-600 text-sm">✓</span>
-                  </div>
-                  <span className="text-gray-700 text-sm">Metode practice de învățare</span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-red-600 text-sm">✓</span>
-                  </div>
-                  <span className="text-gray-700 text-sm">Suport continuu după curs</span>
-                </div>
-              </div>
             </div>
-            
-            <div className="relative">
-              {/* AICI ADUGI O IMAGINE DESPRE ECHIPA SAU DESPRE CURSURI */}
-              <div className="bg-red-50 rounded-lg p-8 text-center border border-red-100">
-                <div className="w-24 h-24 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center shadow-sm">
-                  <span className="text-3xl">👥</span>
-                </div>
-                <h3 className="text-xl font-medium text-gray-900 mb-2">Echipa Noastră</h3>
-                <p className="text-gray-600 text-sm">
-                  Instructori pasionați care înțeleg provocările tehnologice moderne
-                </p>
-              </div>
+
+            {/* Text profesional */}
+            <div className="bg-red-50 rounded-xl p-8 shadow border border-red-100 flex flex-col justify-center h-full">
+              <h3 className="text-2xl font-semibold text-red-700 mb-4 flex items-center gap-2">
+                <span className="text-3xl">👨‍💻</span> Ingineri & Mentori dedicați
+              </h3>
+              <ul className="text-gray-700 text-lg space-y-4 mb-6">
+                <li>• Absolvenți ai Universității Politehnica din București</li>
+                <li>• Experiență practică în companii de tehnologie și educație</li>
+                <li>• Pasiune pentru a face tehnologia accesibilă tuturor</li>
+                <li>• Suport uman, răbdare și explicații pe înțelesul tuturor</li>
+              </ul>
+              <p className="text-gray-600 text-base">
+                Credem că oricine poate învăța tehnologie, indiferent de vârstă sau experiență. Suntem aici să te ghidăm pas cu pas, cu răbdare și entuziasm!
+              </p>
             </div>
           </div>
         </div>
@@ -452,20 +452,18 @@ export default function Home() {
               </div>
               
               <div>
-                <label htmlFor="curs" className="block text-sm font-medium text-gray-700 mb-2">
-                  Cursul dorit *
+                <label htmlFor="data" className="block text-sm font-medium text-gray-700 mb-2">
+                  Data începerii *
                 </label>
                 <select
-                  id="curs"
-                  name="curs"
+                  id="data"
+                  name="data"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 >
-                  <option value="">Selectează un curs</option>
-                  <option value="baze-tehnologie">Bazele Tehnologiei</option>
-                  <option value="smartphone-aplicatii">Smartphone & Aplicații</option>
-                  <option value="tehnologie-casa">Tehnologie pentru Casă</option>
-                  <option value="toate">Toate cursurile</option>
+                  <option value="">Selectează data</option>
+                  <option value="14-august">14 august</option>
+                  <option value="21-august">21 august</option>
                 </select>
               </div>
             </div>
@@ -483,6 +481,32 @@ export default function Home() {
               ></textarea>
             </div>
 
+            <div className="mb-6">
+              <label htmlFor="motiv" className="block text-sm font-medium text-gray-700 mb-2">
+                Motivul înscrierii (opțional)
+              </label>
+              <textarea
+                id="motiv"
+                name="motiv"
+                rows={2}
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="De ce vrei să participi la acest curs?"
+              ></textarea>
+            </div>
+
+            <div className="mb-6">
+              <label htmlFor="job" className="block text-sm font-medium text-gray-700 mb-2">
+                Jobul actual (opțional)
+              </label>
+              <input
+                type="text"
+                id="job"
+                name="job"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="Ex: pensionar, profesor, inginer, etc."
+              />
+            </div>
+
             <div className="text-center">
               <button
                 type="submit"
@@ -492,6 +516,23 @@ export default function Home() {
               </button>
             </div>
           </form>
+        </div>
+      </section>
+
+      {/* Info plată înainte de înscriere */}
+      <section className="py-10 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-red-50 border-l-4 border-red-400 rounded-xl p-6 shadow flex flex-col items-center text-center">
+            <h3 className="text-2xl font-semibold text-red-700 mb-2 flex items-center gap-2">
+              <span className="text-2xl">📧</span> Informații despre înscriere și plată
+            </h3>
+            <p className="text-gray-700 text-lg mb-2">
+              După completarea formularului de înscriere vei primi un email cu toate detaliile necesare pentru efectuarea plății cursului.
+            </p>
+            <p className="text-gray-700 text-lg">
+              După confirmarea plății vei primi un al doilea email cu confirmarea înscrierii și toate informațiile pentru participare.
+            </p>
+          </div>
         </div>
       </section>
 
