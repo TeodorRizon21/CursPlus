@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formStatus, setFormStatus] = useState<null | 'success' | 'error'>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +51,40 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  async function handleInscriereSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setFormStatus(null);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = {
+      nume: formData.get('nume'),
+      email: formData.get('email'),
+      telefon: formData.get('telefon'),
+      dataIncepere: formData.get('data'),
+      mesaj: formData.get('mesaj'),
+      motiv: formData.get('motiv'),
+      job: formData.get('job'),
+    };
+    try {
+      const res = await fetch('/api/inscriere', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        setFormStatus('success');
+        form.reset();
+      } else {
+        setFormStatus('error');
+      }
+    } catch {
+      setFormStatus('error');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header/Navigation */}
@@ -59,14 +96,48 @@ export default function Home() {
             <div className="flex items-center">
               <img src="/logo-rosu.png" alt="CursPlus Logo" className="h-12 w-auto" />
             </div>
+            {/* Desktop Navbar */}
             <nav className="hidden md:flex space-x-8 items-center">
               <a href="#cursuri" className="text-gray-700 hover:text-red-600 transition-colors text-sm font-medium">Cursuri</a>
               <a href="#despre" className="text-gray-700 hover:text-red-600 transition-colors text-sm font-medium">Despre Noi</a>
               <a href="#inscriere" className="bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition-colors">Înscrie-te</a>
             </nav>
+            {/* Burger menu pentru mobil */}
+            <button
+              className="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none"
+              aria-label="Deschide meniul"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+            >
+              <span className={`block h-0.5 w-6 bg-gray-800 transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`block h-0.5 w-6 bg-gray-800 transition-all duration-300 my-1 ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
+              <span className={`block h-0.5 w-6 bg-gray-800 transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            </button>
           </div>
         </div>
       </header>
+      {/* Overlay și meniu mobil mutate aici */}
+      <div
+        className={`md:hidden fixed inset-0 z-[100] bg-black bg-opacity-40 transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setMobileMenuOpen(false)}
+      ></div>
+      <nav
+        className={`md:hidden fixed right-0 top-0 w-full h-auto bg-white shadow-lg z-[100] transform transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        <button
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-gray-700 hover:text-red-600 focus:outline-none"
+          aria-label="Închide meniul"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-7 h-7">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div className="flex flex-col p-8 space-y-6">
+          <a href="#cursuri" className="text-gray-700 hover:text-red-600 text-lg font-medium" onClick={() => setMobileMenuOpen(false)}>Cursuri</a>
+          <a href="#despre" className="text-gray-700 hover:text-red-600 text-lg font-medium" onClick={() => setMobileMenuOpen(false)}>Despre Noi</a>
+          <a href="#inscriere" className="bg-red-600 text-white px-4 py-2 rounded-md text-lg font-medium hover:bg-red-700 transition-colors" onClick={() => setMobileMenuOpen(false)}>Înscrie-te</a>
+        </div>
+      </nav>
 
       {/* Hero Section */}
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
@@ -406,7 +477,7 @@ export default function Home() {
             </p>
           </div>
 
-          <form className="bg-white rounded-lg p-8 shadow-sm border border-gray-100">
+          <form className="bg-white rounded-lg p-8 shadow-sm border border-gray-100" onSubmit={handleInscriereSubmit}>
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label htmlFor="nume" className="block text-sm font-medium text-gray-700 mb-2">
@@ -511,10 +582,17 @@ export default function Home() {
               <button
                 type="submit"
                 className="bg-red-600 text-white px-8 py-3 rounded-md font-medium hover:bg-red-700 transition-colors"
+                disabled={loading}
               >
-                Trimite Înscrierea
+                {loading ? 'Se trimite...' : 'Trimite Înscrierea'}
               </button>
             </div>
+            {formStatus === 'success' && (
+              <p className="text-green-600 text-center mt-4">Înscrierea a fost trimisă cu succes! Verifică emailul pentru instrucțiuni de plată.</p>
+            )}
+            {formStatus === 'error' && (
+              <p className="text-red-600 text-center mt-4">A apărut o eroare. Te rugăm să încerci din nou sau să ne contactezi direct.</p>
+            )}
           </form>
         </div>
       </section>
@@ -576,6 +654,11 @@ export default function Home() {
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
             <p>&copy; 2025 CursPlus. Toate drepturile rezervate.</p>
+            <div className="mt-2 flex flex-col sm:flex-row gap-2 justify-center items-center text-xs">
+              <a href="/termeni-si-conditii" className="hover:underline hover:text-white">Termeni și Condiții</a>
+              <span className="hidden sm:inline">|</span>
+              <a href="/politica-de-confidentialitate" className="hover:underline hover:text-white">Politica de Confidențialitate</a>
+            </div>
           </div>
         </div>
       </footer>
