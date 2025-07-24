@@ -2,15 +2,49 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
+const ADMIN_EMAIL = process.env.ADMIN_MAIL!;
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL!;
 
 export async function POST(req: NextRequest) {
   try {
+    console.log('🟦 Procesare formular nou început');
     const data = await req.json();
     const { nume, email, telefon, dataIncepere, mesaj, motiv, job } = data;
+    
+    console.log('📧 Date primite:', { nume, email, telefon, dataIncepere });
+    console.log('🔑 Verificare variabile de mediu:');
+    console.log('- ADMIN_MAIL configurat:', !!process.env.ADMIN_MAIL);
+    console.log('- RESEND_API_KEY configurat:', !!process.env.RESEND_API_KEY);
+    console.log('- RESEND_FROM_EMAIL configurat:', !!process.env.RESEND_FROM_EMAIL);
+
+    // Trimite email către administrator
+    console.log('📤 Încercare trimitere email către administrator:', ADMIN_EMAIL);
+    const adminEmailResult = await resend.emails.send({
+      from: `CursPlus <${FROM_EMAIL}>`,
+      to: ADMIN_EMAIL,
+      subject: 'Înscriere nouă CursPlus',
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #222;">
+          <h2 style="color: #b91c1c;">Înscriere nouă la CursPlus!</h2>
+          <p>A fost primită o nouă înscriere cu următoarele detalii:</p>
+          <ul style="line-height: 1.7;">
+            <li><b>Nume:</b> ${nume}</li>
+            <li><b>Email:</b> ${email}</li>
+            <li><b>Telefon:</b> ${telefon || '-'}</li>
+            <li><b>Data începerii:</b> ${dataIncepere}</li>
+            <li><b>Mesaj:</b> ${mesaj || '-'}</li>
+            <li><b>Motiv înscriere:</b> ${motiv || '-'}</li>
+            <li><b>Job:</b> ${job || '-'}</li>
+          </ul>
+        </div>
+      `,
+    });
+    console.log('✅ Email administrator trimis cu succes:', adminEmailResult);
 
     // Trimite email către utilizator
-    await resend.emails.send({
-      from: 'CursPlus <grizzlymediapro@gmail.ro>',
+    console.log('📤 Încercare trimitere email către utilizator:', email);
+    const userEmailResult = await resend.emails.send({
+      from: `CursPlus <${FROM_EMAIL}>`,
       to: email,
       subject: 'Confirmare înscriere CursPlus',
       html: `
@@ -44,9 +78,12 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     });
+    console.log('✅ Email utilizator trimis cu succes:', userEmailResult);
 
+    console.log('🟩 Procesare formular finalizată cu succes');
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error('🟥 Eroare la procesarea formularului:', error);
     return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 } 
